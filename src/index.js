@@ -1,5 +1,6 @@
 import configureStore from "./store/configureStore";
-import { bugAdded, bugResolved } from "./store/bugs";
+import { bugAdded, bugResolved, getUnresolvedBugs } from "./store/bugs";
+import { projectAdded } from "./store/projects";
 
 const store = configureStore();
 
@@ -8,9 +9,15 @@ store.subscribe(() => {
   console.log("store changed!", store.getState());
 });
 
-store.dispatch(bugAdded("bug1"));
-store.dispatch(bugAdded("bug2"));
-store.dispatch(bugAdded("bug3"));
-store.dispatch(bugResolved(1));
+// store.dispatch(bugAdded("bug1"));
+// store.dispatch(bugAdded("bug2"));
+// store.dispatch(bugAdded("bug3"));
+// store.dispatch(bugResolved(1));
+
+store.dispatch(projectAdded({ description: "project 1" }));
+store.dispatch(bugAdded({ description: "bug1" }));
+store.dispatch(bugResolved({ id: 1 }));
+
+const unresolvedBugs = getUnresolvedBugs(store.getState());
 
 console.log(store.getState());
